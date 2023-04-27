@@ -1,0 +1,198 @@
+* {
+   transition: all 0.3s ease;
+}
+
+.container {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   height: 100%;
+}
+
+.header {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   position: relative;
+}
+
+.gameTitle {
+   display: inline-block;
+   font-weight: 700;
+   font-size: 48px;
+   line-height: 57px;
+   text-transform: uppercase;
+}
+
+.localeContent {
+   display: inline-block;
+   position: absolute;
+   right: 0;
+}
+
+.localeButton {
+   display: flex;
+   height: 45px;
+   gap: 5px;
+   padding: 13px 22px;
+   border-radius: 35px;
+   color: #E7A3FF;
+   background: rgba(0, 0, 0, 0.2);
+   border: 2px solid #E7A3FF;
+   box-shadow: 4px 4px 0px #693D79;
+   font-weight: 700;
+   font-size: 16px;
+   line-height: 19px;
+   flex-direction: row;
+   align-items: center;
+}
+
+.localeButton:hover {
+   color: #FFFFFF;
+   background: rgba(225, 138, 255, 0.35);
+   border: 2px solid #FFFFFF;
+   box-shadow: 4px 4px 0px #C699D7;
+
+   svg path {
+      fill: #FFFFFF;
+      stroke: #FFFFFF;
+   }
+}
+
+.content {
+   height: 100%;
+   gap: 25px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+
+.outerProfileContainer {
+   width: 550px;
+   height: 160px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   gap: 30px;
+   background: rgba(0, 0, 0, 0.2);
+   border-radius: 20px;
+}
+
+.insideProfileContainer {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   gap: 28px;
+}
+
+.textContainer {
+   width: 362px;
+   height: 56px;
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   padding: 0px;
+   gap: 5px;
+}
+
+.pepe {
+   width: 18px;
+   height: 19px;
+   background-image: url("https://cdn.discordapp.com/attachments/561591566045544449/1101269514106196059/removal.ai_tmp-644af2d1406a5.png");
+   border-radius: 4px;
+   
+}
+
+.avatar {
+   background-image: url("https://cdn.discordapp.com/avatars/379176917464514561/ba29b0b2c84b7993f47ec55bc4e475fc.webp?size=128");
+   width: 100px;
+   height: 100px;
+   position: relative;
+   background-color: #333;
+   background-size: contain;
+   background-repeat: no-repeat;
+   background-position: 50%;
+   border: 5px solid #E7A3FF;
+   border-radius: 1000px;
+}
+
+.nickname {
+   color: #E7A3FF;
+   font-weight: 700;
+   font-size: 27px;
+   line-height: 32px;
+   text-transform: uppercase;
+   align-items: center;
+   display: flex;
+}
+
+.premiumStatus {
+   font-weight: 700;
+   font-size: 16px;
+   line-height: 19px;
+   display: flex;
+   align-items: center;
+   text-transform: uppercase;
+   color: #FFFFFF;
+}
+
+.buttonContainer {
+   display: flex;
+   flex-direction: row;
+   align-items: flex-start;
+   padding: 0;
+   gap: 25px;
+}
+
+.joinButton {
+   border: 0;
+   cursor: pointer;
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-items: flex-start;
+   gap: 10px;
+   padding: 13px 22px;
+   font-weight: 700;
+   font-size: 16px;
+   line-height: 19px;
+   text-transform: uppercase;
+   color: #E7A3FF;
+   background: rgba(0, 0, 0, 0.2);
+   border: 2px solid #E7A3FF;
+   box-shadow: 4px 4px 0px #693D79;
+   border-radius: 34px;
+}
+
+.joinButton:hover {
+   color: #FFFFFF;
+   background: rgba(225, 138, 255, 0.35);
+   border: 2px solid #FFFFFF;
+   box-shadow: 4px 4px 0px #C699D7;
+}
+
+.footer {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+   gap: 10px;
+   padding: 0;
+
+   color: #FFFFFF;
+   font-weight: 700;
+   font-size: 14px;
+   line-height: 17px;
+}
+
+.link {
+   color: #FFFFFF;
+   text-decoration: none;
+   text-transform: uppercase;
+}
+
+.link:hover {
+   text-decoration: underline;
+}
