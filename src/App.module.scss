@@ -1,0 +1,29 @@
+.container {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  padding: 40px;
+
+  background:
+    linear-gradient(0deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.28)),
+    linear-gradient(77.81deg, rgba(141, 34, 118, 0.8) 0%, rgba(43, 31, 121, 0.8) 100%);
+  background-size: 200% 200%;
+  animation: background-animation 25s linear infinite;
+}
+
+@keyframes background-animation {
+  0% {
+    background-position: 10% 0%
+  }
+
+  50% {
+    background-position: 91% 100%
+  }
+
+  100% {
+    background-position: 10% 0%
+  }
+}
