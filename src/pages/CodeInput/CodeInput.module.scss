@@ -1,0 +1,77 @@
+.container {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   height: 100%;
+}
+
+.content {
+   height: 100%;
+   gap: 25px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+
+.title {
+   color: #EEBFFF;
+   font-weight: 700;
+   font-size: 20px;
+   line-height: 24px;
+   text-transform: uppercase;
+}
+
+.outerInputContainer {
+   width: 406px;
+   height: 133px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   background: rgba(0, 0, 0, 0.2);
+   border-radius: 20px;
+}
+
+.insideInputContainer {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 10px;
+   width: 346px;
+   height: 73px;
+   padding: 30px;
+}
+
+.inputName {
+   width: 346px;
+   height: 39px;
+   box-sizing: border-box;
+   flex-direction: row;
+   justify-content: center;
+   gap: 10px;
+   text-align: center;
+   font-weight: 700;
+   font-size: 16px;
+   line-height: 19px;
+   color: #E7A3FF;
+   background: rgba(0, 0, 0, 0.2);
+   border: 2px solid #E7A3FF;
+   border-radius: 7px;
+   outline: none;
+   text-transform: uppercase;
+}
+
+.inputName:focus {
+   background: rgb(228 228 228 / 16.6%);
+   color: #fff;
+   border: 2px solid #fff;
+}
+
+.buttonContainer {
+   display: flex;
+   flex-direction: row;
+   align-items: flex-start;
+   padding: 0;
+   gap: 25px;
+}
