@@ -1,0 +1,25 @@
+.avatar {
+  position: relative;
+
+  background-color: #333;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50%;
+
+  border: 5px solid #E7A3FF;
+  border-radius: 50%;
+}
+
+.normal {
+  width: 130px;
+  height: 130px;
+  min-width: 130px;
+  min-height: 130px;
+}
+
+.small {
+  width: 57px;
+  height: 57px;
+  min-width: 57px;
+  min-height: 57px;
+}
