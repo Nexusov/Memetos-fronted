@@ -1,0 +1,20 @@
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.title {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 57px;
+  text-transform: uppercase;
+}
+
+.language {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+}
