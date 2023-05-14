@@ -1,0 +1,14 @@
+.invite {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
+  span {
+    color: #EEBFFF;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    text-transform: uppercase;
+  }
+}
