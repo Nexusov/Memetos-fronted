@@ -35,5 +35,10 @@ export default defineConfig({
       apply: 'serve',
       enforce: 'post'
     }
-  ]
+  ],
+  css: {
+    modules: {
+      generateScopedName: '[local]-[hash:base64:5]'
+    }
+  }
 })
