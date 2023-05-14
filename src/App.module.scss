@@ -5,13 +5,17 @@
   top: 0;
   bottom: 0;
 
-  padding: 40px;
+  padding: 22px;
 
   background:
     linear-gradient(0deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.28)),
     linear-gradient(77.81deg, rgba(141, 34, 118, 0.8) 0%, rgba(43, 31, 121, 0.8) 100%);
   background-size: 200% 200%;
   animation: background-animation 25s linear infinite;
+}
+
+* {
+  transition: all 0.3s ease;
 }
 
 @keyframes background-animation {
