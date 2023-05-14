@@ -1,0 +1,28 @@
+.button {
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 22px;
+
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  text-transform: uppercase;
+
+  color: #E7A3FF;
+  background: rgba(0, 0, 0, 0.2);
+  border: 2px solid #E7A3FF;
+  border-radius: 34px;
+  box-shadow: 4px 4px 0px #693D79;
+
+  &:hover {
+    color: #FFFFFF;
+    background: rgba(225, 138, 255, 0.35);
+    border: 2px solid #FFFFFF;
+    box-shadow: 4px 4px 0px #C699D7;
+  }
+}
