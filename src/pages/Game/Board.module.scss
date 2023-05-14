@@ -1,0 +1,268 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    gap: 22px;
+}
+
+.column {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.conteinerDiscription {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    text-align: center;
+
+    color: #E7A3FF;
+}
+
+.columnUser {
+    width: 436px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.title {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 45px;
+    text-transform: uppercase;
+}
+
+.podTitle {
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 20px;
+    text-transform: uppercase;
+    color: #E7A3FF;
+}
+
+.containerForUserContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    width: 100%;
+}
+
+.userContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-right: 15px;
+    gap: 10px;
+    width: -webkit-fill-available;
+
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 4px 4px 0px #693D79;
+    outline: 2px solid #E7A3FF;
+    border-radius: 45px 14px 14px 45px;
+}
+
+.userAvatar {
+    width: 47px;
+    height: 47px;
+
+    outline: 2px solid #E7A3FF;
+    border-radius: 38px;
+    transform: scale(1.2);
+    margin-right: 8px;
+}
+
+.userName {
+    width: 100%;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+
+    color: #E7A3FF;
+}
+
+.userCardName {
+    width: 100%;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #E7A3FF;
+    display: flex;
+    justify-content: center;
+}
+
+.containerPoints {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #E7A3FF;
+}
+
+.containerForHorizontal {
+    display: flex;
+    gap: 15px;
+    width: -webkit-fill-available;
+    justify-content: center;
+}
+
+.myCardContainer {
+    display: flex;
+    gap: 10px;
+    width: -webkit-fill-available;
+    justify-content: center;
+}
+
+.myCard {
+    overflow: hidden;
+    width: 92px;
+    height: 137px;
+
+    outline: 3px solid #E7A3FF;
+    border-radius: 14px;
+}
+
+.myCardContainer:hover {
+    .myCard:hover {
+        z-index: 121;
+        transform: scale(1.2) translateY(-20px) rotate(0deg);
+    }
+}
+
+.containerCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+}
+
+.turnCard {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    width: 130px;
+    height: 180px;
+
+    background: linear-gradient(149.85deg, rgba(0, 0, 0, 0.2) 0.05%, rgba(90, 90, 90, 0.2) 100.05%), #694F79;
+    outline: 3px solid #FFFFFF;
+    border-radius: 14px;
+
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38px;
+    text-align: center;
+    text-transform: uppercase;
+
+    color: rgba(255, 255, 255, 0.33);
+
+    text-shadow: 0px 4px 0px rgba(0, 0, 0, 0.25);
+
+    animation: transform-animation 0.3s ease-in-out forwards;
+}
+
+.userTurnCard {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    width: 130px;
+    height: 180px;
+
+    background: linear-gradient(149.85deg, rgba(0, 0, 0, 0.2) 0.05%, rgba(90, 90, 90, 0.2) 100.05%), #694F79;
+    outline: 3px solid #E7A3FF;
+    border-radius: 14px;
+
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38px;
+    text-align: center;
+    text-transform: uppercase;
+
+    color: rgba(255, 255, 255, 0.33);
+
+    text-shadow: 0px 4px 0px rgba(0, 0, 0, 0.25);
+
+    animation: transform-animation 0.3s ease-in-out forwards;
+}
+
+.yourTurnText {
+    padding: 10px;
+}
+
+@keyframes transform-animation {
+    0% {
+        opacity: 0;
+        transform: matrix(0.5, 0, 0, 0.5, 0, 0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: matrix(1, 0, 0, 1, 0, 0);
+    }
+}
+
+.memeImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.timeStep {
+    position: relative;
+    overflow: hidden;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 9px;
+
+    width: 154px;
+
+    border: 3px solid #E7A3FF;
+    border-radius: 14px;
+
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+
+    color: #FFFFFF;
+    text-shadow: 0px 2px 0px #9731BC;
+    background: linear-gradient(0deg, rgba(63, 38, 89, 0.82), rgba(63, 38, 89, 0.82)), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+}
+
+.stepImg {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    opacity: 0.25;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
