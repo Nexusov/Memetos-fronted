@@ -1,0 +1,142 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.content {
+    height: 100%;
+    gap: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatarChangeButton {
+    display: flex;
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    right: 0;
+    bottom: 0;
+    background: #2F163E;
+    border: none;
+    outline: 4px solid #E7A3FF;
+    border-radius: 1300px;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatarChangeButton:hover {
+    color: #FFFFFF;
+    background: #a460bd;
+    outline: 4px solid #FFFFFF;
+
+    svg path {
+        fill: #FFFFFF;
+        stroke: #FFFFFF;
+    }
+}
+
+.title {
+    color: #EEBFFF;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    text-transform: uppercase;
+}
+
+.containerInput {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    gap: 10px;
+}
+
+
+.inputName {
+    width: 100%;
+    padding: 10px 20px;
+
+    text-align: center;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #E7A3FF;
+    background: rgba(0, 0, 0, 0.2);
+    border: 2px solid #E7A3FF;
+    border-radius: 7px;
+    outline: none;
+}
+
+.inputName:focus {
+    background: rgb(228 228 228 / 16.6%);
+    color: #fff;
+    border: 2px solid #fff;
+    padding: 10px 30px;
+}
+
+.containerLoginButton {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0;
+    gap: 25px;
+}
+
+.profileContainer {
+    padding: 0 0;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+
+    width: 550px;
+    height: 160px;
+
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+}
+
+.textContainer {
+    width: 362px;
+    height: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 5px;
+}
+
+.pepe {
+    width: 18px;
+    height: 19px;
+    margin-left: 5px;
+    background-image: url("https://cdn.discordapp.com/attachments/561591566045544449/1103745915283574815/removal.ai_tmp-644af2d1406a5.png");
+    border-radius: 4px;
+}
+
+.nickname {
+    color: #E7A3FF;
+    font-weight: 700;
+    font-size: 27px;
+    line-height: 32px;
+    align-items: center;
+    display: flex;
+}
+
+.premiumStatus {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    color: #FFFFFF;
+}
