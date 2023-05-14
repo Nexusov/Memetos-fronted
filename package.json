@@ -9,9 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "localforage": "^1.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.10.0",
     "react-select": "^5.7.2",
     "sass": "^1.58.3"
@@ -22,13 +24,16 @@
     "@typescript-eslint/eslint-plugin": "^5.52.0",
     "@typescript-eslint/parser": "^5.52.0",
     "@vitejs/plugin-react-swc": "^3.0.0",
+    "discord-api-types": "^0.37.41",
     "eslint": "^8.34.0",
     "eslint-config-semistandard": "^17.0.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
+    "postcss-scss": "^4.0.6",
     "stylelint": "^15.1.0",
+    "stylelint-scss": "^4.6.0",
     "typescript": "^4.9.5",
     "vite": "^4.1.0",
     "vite-plugin-eslint": "^1.8.1",
