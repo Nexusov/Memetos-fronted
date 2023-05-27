@@ -167,7 +167,7 @@ export const Board = ({
       <div className={style.columnUser}>
         <div>
           <div className={style.title}>Memetos</div>
-          <div className={style.podTitle}>Чел. 1/7</div>
+          <div className={style.podTitle}>Чел. {players.length}/{settings.maximumUsers}</div>
         </div>
 
         <div className={style.containerForUserContainer}>
