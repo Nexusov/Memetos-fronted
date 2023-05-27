@@ -18,15 +18,15 @@ export const gameApi = createApi({
       })
     }),
     getLobbyInfo: builder.query<{ owner: Player, players: number, maxPlayers: number }, string>({
-      query: (inviteCode) => ({
-        url: '/create',
+      query: (invite) => ({
+        url: '/lobby',
         method: 'GET',
-        body: {
-          inviteCode
+        params: {
+          invite
         }
       })
     })
   })
 })
 
-export const { useCreateLobbyMutation, useGetLobbyInfoQuery } = gameApi
+export const { useCreateLobbyMutation, useGetLobbyInfoQuery, useLazyGetLobbyInfoQuery } = gameApi
