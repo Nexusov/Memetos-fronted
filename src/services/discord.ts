@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type { APIUser } from 'discord-api-types/v10'
-import { RootStore } from '../redux/store'
+import { RootState } from '../redux/store'
 
 export interface User {
   userId: string
@@ -13,7 +13,7 @@ export const discordApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://discord.com/api/v10',
     prepareHeaders (headers, api) {
-      const token = (api.getState() as RootStore).auth.discordToken
+      const token = (api.getState() as RootState).auth.discordToken
       if (token) {
         headers.set('Authorization', `Bearer ${token}`)
       }
