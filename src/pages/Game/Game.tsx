@@ -7,6 +7,7 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import type { AppDispatch, RootState } from '../../redux/store'
 import { Card, ClientEvents, ServerEvents, gameActions } from '../../services/game'
 import { useUser } from '../../hooks/useUser'
+import toast from 'react-hot-toast'
 
 import { Loader } from '../../components/Loader/Loader'
 
@@ -117,6 +118,12 @@ export const Game = () => {
       })
 
       socket.current.addEventListener('close', () => {
+        // TODO: fix alert for owner. It doesn't work now
+        if (isOwner) {
+          toast('You left the lobby', { icon: '😢', duration: 1500 })
+        } else {
+          toast('You have been kicked from the lobby', { icon: '😢', duration: 1500 })
+        }
         navigate('/')
       })
 
@@ -137,7 +144,7 @@ export const Game = () => {
   }, [isLoadingUser])
 
   if (loading) {
-    return <Loader />
+    return <Loader type='fullscreen'/>
   }
 
   const sendEvent = (event: ClientEvents) => {
@@ -210,7 +217,7 @@ export const Game = () => {
     }
 
     case 'end': {
-      return <Finish players={players}/>
+      return <Finish players={players} settings={settings}/>
     }
 
     default: {

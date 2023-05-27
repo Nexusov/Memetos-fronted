@@ -1,6 +1,8 @@
 import style from './App.module.scss'
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom'
 
+import { Toaster } from 'react-hot-toast'
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -64,6 +66,7 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <>
+      <Toaster />
       <RouterProvider router={router} />
     </>
   )

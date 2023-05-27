@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { createPortal } from 'react-dom'
 import style from './Lobby.module.scss'
+import toast from 'react-hot-toast'
 
 import { ReactComponent as Crown } from '../../assets/crown-three.svg'
 import { ReactComponent as Delete } from '../../assets/delete-three.svg'
@@ -10,6 +11,7 @@ import { User } from '../../services/discord'
 import { LobbySettings, Player } from '../../services/game'
 import { SettingsPopup } from './SettingsPopup'
 import { ProfilePopup } from './ProfilePopup'
+import { Loader } from '../../components/Loader/Loader'
 
 interface UserProps extends User {
   isOwner?: boolean
@@ -23,6 +25,7 @@ const UserItem = ({ name, avatarUrl, userId, isOwner, isKickable, onKick, openPo
     if (!onKick || isOwner) return
     e.stopPropagation()
     await onKick(userId)
+    toast.success(`${name} kicked!`, { icon: '😁', duration: 1500 })
   }
 
   const renderBadge = () => {
@@ -117,6 +120,7 @@ export const Lobby = ({
   const copyInvite = () => {
     if ('clipboard' in navigator) {
       navigator.clipboard.writeText(invite)
+      toast.success('Code copied!', { duration: 1500 })
     }
   }
 
@@ -124,6 +128,7 @@ export const Lobby = ({
     if ('clipboard' in navigator) {
       const url = new URL(`invite/${invite}`, location.origin)
       navigator.clipboard.writeText(url.toString())
+      toast.success('Link copied!', { duration: 1500 })
     }
   }
 
@@ -154,7 +159,7 @@ export const Lobby = ({
         <div className={style.column}>
           <div>
             <div className={style.title}>Lobby</div>
-            <div className={style.podTitle}>Чел. 1/7</div>
+            <div className={style.podTitle}>Чел. {users.length}/{settings.maximumUsers}</div>
           </div>
           <div className={style.containerForUserContainer}>
             {users.map((user) =>
@@ -169,6 +174,11 @@ export const Lobby = ({
               />
             )}
           </div>
+          {!isOwner && (
+            <div className={style.inviteButtonContainer}>
+              <button className={style.invite} onClick={copyInviteUrl}>Пригласить</button>
+            </div>
+          )}
         </div>
 
         <div className={style.column}>
@@ -176,7 +186,7 @@ export const Lobby = ({
             <div>
               <div className={style.title}>Settings</div>
             </div>
-            <div className={style.podTitle}>Code: <span onClick={copyInvite}>{invite}</span></div>
+            <div className={style.podTitle} onMouseDown={copyInvite}>Code: <span className={style.gameCode}>{invite}</span></div>
           </div>
 
           <div className={style.containerForSettingsContainer}>
@@ -207,9 +217,20 @@ export const Lobby = ({
           </div>
 
           <div className={style.conteinerButtonControlBlat}>
-            <button className={style.settings} disabled={!isOwner} onClick={togglePopup}><Setting /></button>
-            <button className={style.settings} onClick={copyInviteUrl}>Пригласить</button>
-            <button className={style.start} disabled={!isOwner} onClick={onStart}>Начать</button>
+            {isOwner && (
+              <div className={style.buttons}>
+                <button className={style.settings} disabled={!isOwner} onClick={togglePopup}><Setting /></button>
+                <button className={style.settings} onClick={copyInviteUrl}>Пригласить</button>
+                <button className={style.start} disabled={!isOwner} onClick={onStart}>Начать</button>
+              </div>
+            )}
+
+            {!isOwner && (
+              <div className={style.waiting}>
+                <div className={style.waitingText}>Ждём ведущего...</div>
+                <Loader type='small' />
+              </div>
+            )}
           </div>
         </div>
       </div>
