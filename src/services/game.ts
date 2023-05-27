@@ -69,6 +69,7 @@ export type ServerEvents =
 
   WebsocketMessage<'start_round', { joke: string }> |
   WebsocketMessage<'cards_update', Pick<Card, 'userId' | 'cardId' | 'pictureUrl'>[]> |
+  WebsocketMessage<'set_user_cards', Pick<Card, 'cardId' | 'pictureUrl'>[]> |
 
   WebsocketMessage<'start_voting'> |
   WebsocketMessage<'vote_results', VoteResults> |
@@ -129,6 +130,7 @@ export const gameSlice = createSlice({
     startRound (state, action: PayloadAction<{ joke: string }>) {
       state.joke = action.payload.joke
       state.status = 'chooseCards'
+      state.cards = []
     },
     cardsUpdate (state, action: PayloadAction<Pick<Card, 'userId' | 'cardId' | 'pictureUrl'>[]>) {
       state.cards = action.payload.map((card) => ({ ...card, voters: [] }))
@@ -159,7 +161,9 @@ export const gameSlice = createSlice({
         ...state.settings,
         ...action.payload
       }
-    }
+    },
+
+    reset: () => initialState
   }
 })
 
