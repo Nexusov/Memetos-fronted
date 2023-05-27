@@ -175,10 +175,10 @@
     display: flex;
     height: -webkit-fill-available;
     align-items: flex-end;
+    justify-content: center;
     width: 100%;
     gap: 15px;
 }
-
 
 .settings,
 .invite,
@@ -210,6 +210,24 @@
 }
 
 .invite {
+    cursor: pointer;
+    display: flex;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    text-transform: uppercase;
+    color: #E7A3FF;
+    background: rgba(0, 0, 0, 0.2);
+    border: 2px solid #E7A3FF;
+    box-shadow: 4px 4px 0px #693D79;
+    border-radius: 34px;
+}
+
+.inviteButtonContainer {
+    display: flex;
+    justify-content: center;
+    height: -webkit-fill-available;
+    align-items: flex-end;
     width: 100%;
 }
 
@@ -238,4 +256,42 @@
     background: rgba(255, 185, 138, 0.35);
     border: 2px solid #FFFFFF;
     box-shadow: 4px 4px 0px #d7ad99;
+}
+
+.waitingText {
+    display: flex;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 19px;
+    text-transform: uppercase;
+    color: #E7A3FF;
+    align-items: center;
+    padding-bottom: 13px;
+}
+
+.buttons {
+    display: flex;
+    height: -webkit-fill-available;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    gap: 15px;
+}
+
+.waiting {
+    display: flex;
+    height: -webkit-fill-available;
+    align-items: flex-end;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 15px;
+}
+
+.gameCode {
+    cursor: pointer;
+    color: #de81ff;
+
+    &:hover {
+        font-size: 17.5px;
+    }
 }
