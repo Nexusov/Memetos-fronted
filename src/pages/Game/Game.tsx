@@ -1,13 +1,18 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+
 import { useEffect, useRef, useState } from 'react'
-import { ClientEvents, ServerEvents, gameActions } from '../../services/game'
 import { useDispatch, useSelector } from 'react-redux'
-import type { AppDispatch, RootStore } from '../../redux/store'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+
+import type { AppDispatch, RootState } from '../../redux/store'
+import { Card, ClientEvents, ServerEvents, gameActions } from '../../services/game'
 import { useUser } from '../../hooks/useUser'
-import { useSearchParams } from 'react-router-dom'
+
+import { Loader } from '../../components/Loader/Loader'
 
 import { Lobby } from './Lobby'
 import { Board } from './Board'
+import { Finish } from './Finish'
 
 const transform = <T, >(data: string) => {
   return (JSON.parse(data) as unknown) as T
@@ -15,18 +20,30 @@ const transform = <T, >(data: string) => {
 
 export const Game = () => {
   const socket = useRef<WebSocket>()
-  const [searchParams] = useSearchParams()
+  const location = useLocation()
+  const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
+
+  const [userCards, setUserCards] = useState<Pick<Card, 'cardId' | 'pictureUrl'>[]>([])
+  const [selectedCard, setSelectedCard] = useState<Pick<Card, 'cardId' | 'pictureUrl'>>()
+  const [votedCard, setVotedCard] = useState<Card>()
 
   const [loading, setLoading] = useState(true)
   const { user, isLoading: isLoadingUser } = useUser()
 
-  const settings = useSelector((state: RootStore) => state.game.settings)
-  const gameStatus = useSelector((state: RootStore) => state.game.status)
-  const players = useSelector((state: RootStore) => state.game.players)
-  const ownerId = useSelector((state: RootStore) => state.game.ownerId)
+  const settings = useSelector((state: RootState) => state.game.settings)
+  const gameStatus = useSelector((state: RootState) => state.game.status)
+  const players = useSelector((state: RootState) => state.game.players)
+  const ownerId = useSelector((state: RootState) => state.game.ownerId)
+  const boardCards = useSelector((state: RootState) => state.game.cards)
+  const joke = useSelector((state: RootState) => state.game.joke)
 
-  const isOwner = user.userId === ownerId
+  const inviteCode = location.state
+  const isOwner = user?.userId === ownerId
+
+  if (typeof inviteCode !== 'string') {
+    return <Navigate to='/' />
+  }
 
   useEffect(() => {
     if (isLoadingUser) return
@@ -34,6 +51,7 @@ export const Game = () => {
 
     socket.current.addEventListener('open', () => {
       if (!socket.current) return
+      dispatch(gameActions.reset())
 
       socket.current.addEventListener('message', (event) => {
         const serverEvent = transform<ServerEvents>(event.data)
@@ -63,6 +81,9 @@ export const Game = () => {
             break
           }
           case 'start_round': {
+            setSelectedCard(undefined)
+            setVotedCard(undefined)
+
             dispatch(gameActions.startRound(serverEvent.data!))
             break
           }
@@ -82,6 +103,10 @@ export const Game = () => {
             dispatch(gameActions.cardsUpdate(serverEvent.data!))
             break
           }
+          case 'set_user_cards': {
+            setUserCards(serverEvent.data!)
+            break
+          }
 
           default: {
             // Ensure we catch every case
@@ -91,12 +116,16 @@ export const Game = () => {
         }
       })
 
+      socket.current.addEventListener('close', () => {
+        navigate('/')
+      })
+
       socket.current.send(
         JSON.stringify({
           type: 'connect',
           data: {
             ...user,
-            inviteCode: searchParams.get('code')
+            inviteCode
           }
         } as ClientEvents)
       )
@@ -108,20 +137,55 @@ export const Game = () => {
   }, [isLoadingUser])
 
   if (loading) {
-    return (
-      <h1>Загрузка</h1>
-    )
+    return <Loader />
   }
 
   const sendEvent = (event: ClientEvents) => {
     socket.current?.send(JSON.stringify(event))
   }
 
+  const selectCard = (cardId: number) => {
+    const card = userCards.find((card) => card.cardId === cardId)
+    if (!card) return
+
+    sendEvent({
+      type: 'choose_card',
+      data: { cardId }
+    })
+    setSelectedCard(card)
+  }
+
+  const voteCard = (cardId: number) => {
+    const card = boardCards.find((card) => card.cardId === cardId)
+    if (!card) return
+
+    sendEvent({
+      type: 'vote_card',
+      data: { cardId }
+    })
+    setVotedCard(card)
+  }
+
   switch (gameStatus) {
     case 'chooseCards':
     case 'voteCards':
     case 'voteResults': {
-      return <Board />
+      return (
+        <Board
+          state={gameStatus}
+          players={players}
+          settings={settings}
+
+          joke={joke}
+          boardCards={boardCards}
+          voteCard={voteCard}
+          votedCard={votedCard}
+
+          cards={userCards}
+          selectCard={selectCard}
+          selectedCard={selectedCard}
+        />
+      )
     }
 
     case 'idle':
@@ -131,19 +195,22 @@ export const Game = () => {
           players={players}
           ownerId={ownerId}
           isOwner={isOwner}
+          settings={settings}
+          invite={inviteCode}
+
+          onStart={() => sendEvent({ type: 'start' })}
           onKick={(userId) => sendEvent({
             type: 'kick',
             data: {
               userId
             }
           })}
-          settings={settings}
         />
       )
     }
 
     case 'end': {
-      return <h1>Результаты игры</h1>
+      return <Finish players={players}/>
     }
 
     default: {
@@ -152,29 +219,4 @@ export const Game = () => {
       throw new Error(exhaustiveCheck)
     }
   }
-
-  if (gameStatus === 'starting') {
-    return (
-      <h1>1...2...3... Начало игры</h1>
-    )
-  }
-
-  return (
-    <div>
-      Список игроков:
-
-      <ul>
-        {players.map((player) => (
-          <li key={player.userId}>
-            <img src={player.avatarUrl} />
-            <span>{player.name}</span>
-
-            {player.userId === ownerId && <span>Владелец игры</span>}
-          </li>
-        ))}
-      </ul>
-
-      {isOwner && <span>Вы можете выгонять людей, гы</span>}
-    </div>
-  )
 }
