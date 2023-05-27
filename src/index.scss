@@ -4,6 +4,20 @@
   transition: all 0.3s ease;
 }
 
+div, span, img {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+a {
+  &:hover, &:visited, &:focus {
+    text-decoration: none;
+  }
+}
+
 body {
   margin: 0;
   padding: 0;
