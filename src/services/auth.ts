@@ -1,8 +1,12 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import type { DiscordToken } from '../types/authApi'
+import { User, discordApi } from './discord'
+import { randomAvatar } from '../devConstants'
 
 interface AuthState {
   discordToken: string | null
+  user: User | null
+
   status: 'init' | 'loading' | 'success' | 'error'
   error: string | null
 }
@@ -15,8 +19,19 @@ const TOKEN_STORAGE_KEY = 'token'
 
 const initialState: AuthState = {
   discordToken: localStorage.getItem(TOKEN_STORAGE_KEY),
+  user: null,
+
   status: 'init',
   error: null
+}
+
+const generateUserId = (length = 9): string => {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+  const charactersLength = characters.length
+
+  return Array(length).fill(null).map(
+    () => characters.at(Math.floor(Math.random() * charactersLength))
+  ).join('')
 }
 
 export const getDiscordToken = createAsyncThunk<DiscordToken, string>(
@@ -44,13 +59,21 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logout: (state) => {
+    setUser (state, action: PayloadAction<Partial<Pick<User, 'avatarUrl' | 'name'>>>) {
+      if (state.user === null) return
+      state.user = {
+        ...state.user,
+        ...action.payload
+      }
+    },
+    logout (state) {
       localStorage.removeItem(TOKEN_STORAGE_KEY)
       state.discordToken = null
       state.error = null
       state.status = 'success'
     }
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(getDiscordToken.pending, (state) => {
@@ -65,6 +88,20 @@ export const authSlice = createSlice({
       .addCase(getDiscordToken.rejected, (state, action) => {
         state.status = 'error'
         state.error = (action.payload as RejectValue).message
+      })
+
+    builder
+      .addMatcher(discordApi.endpoints.getCurrentUser.matchFulfilled, (state, action) => {
+        state.user = action.payload
+      })
+      .addMatcher(discordApi.endpoints.getCurrentUser.matchRejected, (state) => {
+        if (state.user !== null) return
+
+        state.user = {
+          userId: generateUserId(),
+          name: 'MemeCooler',
+          avatarUrl: randomAvatar
+        }
       })
   }
 })
