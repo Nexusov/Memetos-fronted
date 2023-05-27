@@ -1,6 +1,9 @@
 import style from './Invitation.module.scss'
 import { ReactComponent as ChangeIcon } from '../../assets/change.svg'
 
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+
 import { Button } from '../../components/Button/Button'
 import { Footer } from '../../components/Footer/Footer'
 import { Avatar } from '../../components/Avatar/Avatar'
@@ -13,8 +16,7 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useUser } from '../../hooks/useUser'
 import { useGetLobbyInfoQuery } from '../../services/gameApi'
 
-import toast from 'react-hot-toast'
-
+// TODO: make a separate general file for random avatars and nicks
 const avatars: string[] = [
   'https://cdn.discordapp.com/attachments/1101177259643125820/1101180013493112902/helpus.png',
   'https://cdn.discordapp.com/attachments/1101177259643125820/1101178601753280522/fy4bd2jQfPI.png',
@@ -23,25 +25,99 @@ const avatars: string[] = [
   'https://cdn.discordapp.com/attachments/1101177259643125820/1101178210395365487/3eIoltWByjg.png'
 ]
 
+const nicknames: string[] = [
+  'MemeCooler',
+  'MemeMaster',
+  'Noob',
+  'LolzGuru',
+  'FunnyFalcon',
+  'JokesterJay',
+  'CrazyComedian',
+  'LaughingLion',
+  'SillyMonkey',
+  'HilariousHippo',
+  'WittyWhale',
+  'CheekyChimp',
+  'GigglingGorilla',
+  'PunnyPanda',
+  'HumorHero',
+  'QuirkyQuokka',
+  'JollyJester',
+  'ChucklingCheetah',
+  'AmusingAlpaca',
+  'WhimsicalWombat',
+  'GoofyGiraffe',
+  'SarcasticSloth',
+  'GrumpyCatFan',
+  'DogeLover',
+  'RickrollMaster',
+  'KeyboardCatFanatic',
+  'PepeTheFrog',
+  'SuccessKidFan',
+  'HarambeForever',
+  'CryingJordanFan',
+  'NyanCatAdmirer',
+  'TrollFaceGuru',
+  'DistractedBoyfriend',
+  'BadLuckBrianFan',
+  'HideThePainHarold',
+  'EvilKermit',
+  'SaltBaeFanatic',
+  'DrakeMemeEnthusiast',
+  'BlinkingWhiteGuy',
+  'SpongebobMemeKing',
+  'SurprisedPikachuLover',
+  'ArthurFistMemeFan',
+  'PewDiePieFan',
+  'BendydoodleCabbagepatch',
+  'ButterscotchCrumblebatch',
+  'BumblebeeCucumberpants',
+  'BandywinksCrumblebatch',
+  'ButtermilkCrumblepatch',
+  'BingleberryCumberbund',
+  'BumblesnatchCrumpetbatch',
+  'ButtercupCrumblepants',
+  'BundlesnuffCrumplesnatch',
+  'BandywagCabbagepants',
+  'MrTwister',
+  'LordBurger',
+  'PizzaMaster',
+  'Amogus',
+  'Marshak'
+]
+
+const randomNickname = () => nicknames[Math.floor(Math.random() * nicknames.length)]
+
 const randomAvatar = () => avatars[Math.floor(Math.random() * avatars.length)]
+
+const validationSchema = Yup.object({
+  nicknameInput: Yup.string().required('Напишите хоть что-нибудь 👉👈')
+})
 
 export const Invitation = () => {
   const { code } = useParams()
   const navigate = useNavigate()
 
-  const { user, isAnonymous, isLoading: userLoading, setUser } = useUser()
+  const { user, isAnonymous, isLoading: userLoading, setName, setAvatar } = useUser()
   const { data: lobbyInfo, isLoading: lobbyLoading, isError } = useGetLobbyInfoQuery(code ?? skipToken)
+
+  const formik = useFormik({
+    initialValues: {
+      nicknameInput: randomNickname()
+    },
+    validationSchema,
+    onSubmit: () => { /**/ }
+  })
 
   if (!code) {
     return <Navigate to='/invite' />
   }
 
   if (userLoading || lobbyLoading) {
-    return <Loader type='fullscreen'/>
+    return <Loader />
   }
 
   if (isError || !lobbyInfo) {
-    toast.error('Error!', { duration: 1500 })
     return <Navigate to='/invite' />
   }
 
@@ -70,7 +146,7 @@ export const Invitation = () => {
     return (
       <>
         <Avatar avatarUrl={user.avatarUrl} size='normal'>
-          <button className={style.avatarChangeButton} onClick={() => setUser({ avatarUrl: randomAvatar() })}>
+          <button className={style.avatarChangeButton} onClick={() => setAvatar(randomAvatar())}>
             <ChangeIcon />
           </button>
         </Avatar>
@@ -78,9 +154,13 @@ export const Invitation = () => {
         <div className={style.containerInput}>
           <span className={style.title}>ВЫБЕРИ МЕМ-АВУ И ПСЕВДОНИМ</span>
           <input
-            className={style.inputName}
-            value={user.name}
-            onChange={(e) => setUser({ name: e.target.value })}
+            className={`${style.inputName} ${formik.errors.nicknameInput ? style.invalidInput : ''}`}
+            value={formik.values.nicknameInput}
+            name="nicknameInput"
+            onChange={(e) => { formik.handleChange(e) }}
+            onBlur={formik.handleBlur}
+            placeholder={formik.touched.nicknameInput && formik.errors.nicknameInput ? formik.errors.nicknameInput : ''}
+            autoComplete="off"
             type='text'
             required
           />
@@ -89,18 +169,8 @@ export const Invitation = () => {
     )
   }
 
-  // TODO: check alert are working
   const enterLobby = () => {
-    if (!lobbyInfo) {
-      toast.error('Lobby not found!', { duration: 1500 })
-      return
-    }
-
-    if (lobbyInfo.players === lobbyInfo.maxPlayers) {
-      toast.error('Lobby is full!', { duration: 1500 })
-      return
-    }
-
+    isAnonymous && setName(formik.values.nicknameInput)
     navigate('/game', {
       state: code
     })
@@ -119,7 +189,7 @@ export const Invitation = () => {
         {renderUser()}
 
         <div className={style.buttonContainer}>
-          <Button onClick={enterLobby}>Войти в лобби</Button>
+          <Button disabled={!formik.values.nicknameInput || lobbyLoading} onClick={enterLobby}>Войти в лобби</Button>
         </div>
       </div>
 
