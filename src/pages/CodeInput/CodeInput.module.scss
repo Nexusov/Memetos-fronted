@@ -60,12 +60,18 @@
    border-radius: 7px;
    outline: none;
    text-transform: uppercase;
-}
 
-.inputName:focus {
-   background: rgb(228 228 228 / 16.6%);
-   color: #fff;
-   border: 2px solid #fff;
+   &:focus {
+      background: rgb(228 228 228 / 16.6%);
+      color: #fff;
+      border: 2px solid #fff;
+      transform: scale(1.03)
+   }
+
+   &::placeholder {
+      font-size: 15px;
+      font-weight: 600;
+   }
 }
 
 .buttonContainer {
