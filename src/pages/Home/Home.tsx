@@ -1,8 +1,6 @@
 import style from './Home.module.scss'
 
 import { useNavigate } from 'react-router-dom'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
 
 import { ReactComponent as ChangeIcon } from '../../assets/change.svg'
 
@@ -17,7 +15,6 @@ import { useUser } from '../../hooks/useUser'
 import { Loader } from '../../components/Loader/Loader'
 import { useCreateLobbyMutation } from '../../services/gameApi'
 
-// TODO: make a separate general file for random avatars and nicks
 const avatars: string[] = [
   'https://cdn.discordapp.com/attachments/1101177259643125820/1101180013493112902/helpus.png',
   'https://cdn.discordapp.com/attachments/1101177259643125820/1101178601753280522/fy4bd2jQfPI.png',
@@ -26,74 +23,7 @@ const avatars: string[] = [
   'https://cdn.discordapp.com/attachments/1101177259643125820/1101178210395365487/3eIoltWByjg.png'
 ]
 
-const nicknames: string[] = [
-  'MemeCooler',
-  'MemeMaster',
-  'Noob',
-  'LolzGuru',
-  'FunnyFalcon',
-  'JokesterJay',
-  'CrazyComedian',
-  'LaughingLion',
-  'SillyMonkey',
-  'HilariousHippo',
-  'WittyWhale',
-  'CheekyChimp',
-  'GigglingGorilla',
-  'PunnyPanda',
-  'HumorHero',
-  'QuirkyQuokka',
-  'JollyJester',
-  'ChucklingCheetah',
-  'AmusingAlpaca',
-  'WhimsicalWombat',
-  'GoofyGiraffe',
-  'SarcasticSloth',
-  'GrumpyCatFan',
-  'DogeLover',
-  'RickrollMaster',
-  'KeyboardCatFanatic',
-  'PepeTheFrog',
-  'SuccessKidFan',
-  'HarambeForever',
-  'CryingJordanFan',
-  'NyanCatAdmirer',
-  'TrollFaceGuru',
-  'DistractedBoyfriend',
-  'BadLuckBrianFan',
-  'HideThePainHarold',
-  'EvilKermit',
-  'SaltBaeFanatic',
-  'DrakeMemeEnthusiast',
-  'BlinkingWhiteGuy',
-  'SpongebobMemeKing',
-  'SurprisedPikachuLover',
-  'ArthurFistMemeFan',
-  'PewDiePieFan',
-  'BendydoodleCabbagepatch',
-  'ButterscotchCrumblebatch',
-  'BumblebeeCucumberpants',
-  'BandywinksCrumblebatch',
-  'ButtermilkCrumblepatch',
-  'BingleberryCumberbund',
-  'BumblesnatchCrumpetbatch',
-  'ButtercupCrumblepants',
-  'BundlesnuffCrumplesnatch',
-  'BandywagCabbagepants',
-  'MrTwister',
-  'LordBurger',
-  'PizzaMaster',
-  'Amogus',
-  'Marshak'
-]
-
-const randomNickname = () => nicknames[Math.floor(Math.random() * nicknames.length)]
-
 const randomAvatar = () => avatars[Math.floor(Math.random() * avatars.length)]
-
-const validationSchema = Yup.object({
-  nicknameInput: Yup.string().required('Напишите хоть что-нибудь 👉👈')
-})
 
 export const Home = () => {
   const { user, isLoading, isAnonymous, setName, setAvatar } = useUser()
@@ -101,21 +31,11 @@ export const Home = () => {
   const navigate = useNavigate()
   const hasInvite = false
 
-  const formik = useFormik({
-    initialValues: {
-      // TODO: fix nickname updating when getingt back from InvitePage
-      nicknameInput: randomNickname()
-    },
-    validationSchema,
-    onSubmit: () => { /**/ }
-  })
-
   if (isLoading || user === null) {
-    return <Loader />
+    return <Loader type='fullscreen'/>
   }
 
   const createLobbyHandler = async () => {
-    isAnonymous && setName(formik.values.nicknameInput)
     const lobbyInfo = await createLobby(user.userId).unwrap()
       .catch(() => null)
 
@@ -134,18 +54,14 @@ export const Home = () => {
               <ChangeIcon />
             </button>
           </Avatar>
+
           <div className={style.containerInput}>
             <span className={style.title}>ВЫБЕРИ МЕМ-АВУ И ПСЕВДОНИМ</span>
-            <div className={style.containerForHomePageValidationErrorInspiredByEVT}></div>
             <input
-              className={`${style.inputName} ${formik.errors.nicknameInput ? style.invalidInput : ''}`}
-              value={formik.values.nicknameInput}
-              name="nicknameInput"
-              onChange={(e) => { formik.handleChange(e) }}
-              onBlur={formik.handleBlur}
+              className={style.inputName}
+              value={user.name}
+              onChange={(e) => setName(e.target.value)}
               type='text'
-              placeholder={formik.touched.nicknameInput && formik.errors.nicknameInput ? formik.errors.nicknameInput : ''}
-              autoComplete="off"
               required
             />
           </div>
@@ -175,8 +91,8 @@ export const Home = () => {
         {renderProfile()}
 
         <div className={style.containerLoginButton}>
-          <Button disabled={!formik.values.nicknameInput || isCreatingLobby} onClick={createLobbyHandler}>Создать лобби</Button>
-          <Button disabled={!formik.values.nicknameInput || isCreatingLobby} onClick={() => navigate('/invite')}>Войти по коду</Button>
+          <Button disabled={isCreatingLobby} onClick={createLobbyHandler}>Создать лобби</Button>
+          <Button disabled={isCreatingLobby} onClick={() => navigate('/invite')}>Войти по коду</Button>
         </div>
 
         {isAnonymous && <div className={style.containerLoginButton}>
