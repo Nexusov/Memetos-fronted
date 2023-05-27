@@ -1,49 +1,34 @@
-import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
 import { User, useGetCurrentUserQuery } from '../services/discord'
-import { randomAvatar } from '../devConstants'
-
-const generateUserId = (length = 9): string => {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-  const charactersLength = characters.length
-
-  return Array(length).fill(null).map(
-    () => characters.at(Math.floor(Math.random() * charactersLength))
-  ).join('')
-}
+import { authActions } from '../services/auth'
+import type { AppDispatch, RootState } from '../redux/store'
 
 export const useUser = () => {
-  const [initializing, setInitializing] = useState(true)
-  const [user, setUser] = useState<User>(() => ({
-    userId: generateUserId(),
-    name: 'MemeCooler',
-    avatarUrl: randomAvatar
-  }))
+  const dispatch = useDispatch<AppDispatch>()
+  const user = useSelector((state: RootState) => state.auth.user)
 
   const { data: discordUser, isFetching, isError, isLoading } = useGetCurrentUserQuery()
   const isAnonymous = !isFetching && (isError || !discordUser)
 
-  useEffect(() => {
-    if (isFetching) return
-    if (discordUser) {
-      setUser(discordUser)
-    }
-
-    setInitializing(false)
-  }, [discordUser, isFetching])
+  const setUser = (user: Partial<Pick<User, 'avatarUrl' | 'name'>>) => {
+    dispatch(authActions.setUser(user))
+  }
 
   const setName = (name: string) => {
-    setUser((user) => ({ ...user, name }))
+    setUser({ name })
   }
 
   const setAvatar = (avatarUrl: string) => {
-    setUser((user) => ({ ...user, avatarUrl }))
+    setUser({ avatarUrl })
   }
 
   return {
     user,
     setName,
     setAvatar,
-    isLoading: isLoading || initializing,
+    setUser,
+    isLoading,
     isAnonymous
   }
 }
