@@ -1,0 +1,237 @@
+.container {
+  display: flex;
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  isolation: isolate;
+  background: rgba(41, 20, 45, 0.81);
+  backdrop-filter: blur(10px);
+  z-index: 1;
+}
+
+.column {
+  height: 100%; 
+  display: flex;
+  flex-direction: column;
+  gap: 31px;
+  justify-content: center;
+}
+
+.title {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 38px;
+  line-height: 45px;
+  text-transform: uppercase;
+}
+
+.subTitle {
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 20px;
+  text-transform: uppercase;
+  color: #E7A3FF;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: -webkit-fill-available;
+}
+
+.closeButton {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  padding: 13px 22px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  text-transform: uppercase;
+  color: #E7A3FF;
+  background: rgba(0, 0, 0, 0.2);
+  border: 2px solid #E7A3FF;
+  box-shadow: 4px 4px 0px #693D79;
+  border-radius: 34px;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 28px;
+  width: 490px;
+}
+
+.profileContainer {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  width: 550px;
+  height: 240px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+
+.textContainer {
+  width: 362px;
+  height: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 5px;
+} 
+
+.pepe {
+  width: 18px;
+  height: 19px;
+  margin-left: 5px;
+  background-image: url("https://cdn.discordapp.com/attachments/561591566045544449/1103745915283574815/removal.ai_tmp-644af2d1406a5.png");
+  border-radius: 4px;
+}
+
+.nickname {
+  color: #E7A3FF;
+  font-weight: 700;
+  font-size: 27px;
+  line-height: 32px;
+  align-items: center;
+  display: flex;
+}
+
+.premiumStatus {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  color: #FFFFFF;
+}
+
+.statsContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 34px;
+}
+
+.top1 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 4px;
+
+  .line {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    width: 97px;
+    height: 6px;
+    background: #CCC982;
+    border-radius: 26px;
+  }
+}
+
+.top2 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 4px;
+
+  .line {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    width: 97px;
+    height: 6px;
+    background: #56CCC5;
+    border-radius: 26px;
+  }
+}
+
+.top3 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 4px;
+
+  .line {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    width: 97px;
+    height: 6px;
+    background: #CD7F32;
+    border-radius: 26px;
+  }
+}
+
+.total {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 4px;
+
+  .line {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    width: 97px;
+    height: 6px;
+    background: #32CD67;
+    border-radius: 26px;
+  }
+}
+
+.statsText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 2px;
+}
+
+.topTitle {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  color: #FFFFFF;
+}
+
+.topCount {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  color: #FFFFFF;
+}
