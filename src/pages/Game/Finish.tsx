@@ -1,7 +1,13 @@
 import style from './Finish.module.scss'
-import { Player } from '../../services/game'
+import { LobbySettings, Player } from '../../services/game'
 
-// TODO: 1) Добавить иконки в список игроков
+import { useNavigate } from 'react-router'
+
+import { ReactComponent as Trophy } from '../../assets/trophy.svg'
+import { ReactComponent as BlueMedal } from '../../assets/blue-medal.svg'
+import { ReactComponent as BronzeMedal } from '../../assets/bronze-medal.svg'
+
+// TODO: 1) Менять стиль игрока в списке, в зависимости от занятого места (только в СПИСКЕ!)
 
 /*
   Цвета для смены цвета игрока в списке, в зависимости от места (бордер, весь текст, иконка):
@@ -17,6 +23,7 @@ const PlayerItem = ({ avatarUrl, name, memePoints }: Player) => {
   return (
     <div className={style.userContainer}>
       <img className={style.userAvatar} src={avatarUrl} alt="" />
+      <div className={style.icon}><Trophy /></div>
       <div className={style.userName}>{name}</div>
       <div className={style.containerPoints}>{memePoints} mp</div>
     </div>
@@ -25,17 +32,21 @@ const PlayerItem = ({ avatarUrl, name, memePoints }: Player) => {
 
 interface FinishProps {
   players: Player[]
+  settings: LobbySettings
 }
 
 export const Finish = ({
-  players
+  players,
+  settings
 }: FinishProps) => {
+  const navigate = useNavigate()
+
   return (
     <div className={style.container}>
       <div className={style.columnUser}>
         <div>
           <div className={style.title}>Memetos</div>
-          <div className={style.subTitle}>Чел. 1/7</div>
+          <div className={style.subTitle}>Чел. {players.length}/{settings.maximumUsers}</div>
         </div>
 
         <div className={style.userListContainer}>
@@ -43,7 +54,8 @@ export const Finish = ({
         </div>
 
         <div className={style.buttonContainer}>
-          <button className={style.button}>ВЕРНУТЬСЯ В ЛОББИ</button>
+          {/* TODO: make navigation to the Lobby, not at Home */}
+          <button className={style.button} onClick={() => navigate('/')}>ВЕРНУТЬСЯ В ЛОББИ</button>
         </div>
       </div>
 
