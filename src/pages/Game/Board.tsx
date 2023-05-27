@@ -1,17 +1,167 @@
 import style from './Board.module.scss'
-import { Player } from '../../services/game'
+import { Card, LobbySettings, Player } from '../../services/game'
+import { useEffect, useState } from 'react'
 
 const PlayerItem = ({ avatarUrl, name, memePoints }: Player) => {
   return (
     <div className={style.userContainer}>
       <img className={style.userAvatar} src={avatarUrl} alt="" />
       <div className={style.userName}>{name}</div>
-      <div className={style.containerPoints}>{memePoints || 0}mp</div>
+      <div className={style.containerPoints}>{memePoints || 0} mp</div>
     </div>
   )
 }
 
-export const Board = () => {
+interface UserCardProps extends Pick<Card, 'pictureUrl'> {
+  isSelected?: boolean
+  onSelect: () => void
+}
+
+const UserCard = ({ pictureUrl, onSelect, isSelected }: UserCardProps) => {
+  const cx = isSelected ? `${style.myCard} ${style.selectedCard}` : style.myCard
+
+  return (
+    <div className={cx} onClick={onSelect}>
+      <img className={style.memeImg} src={pictureUrl} />
+    </div>
+  )
+}
+
+interface BoardCardProps extends Pick<Card, 'pictureUrl'> {
+  hidePicture?: boolean
+
+  showAuthor?: boolean
+  author?: Player
+
+  onVote: () => void
+  isVoted: boolean
+  voters?: Player[]
+}
+
+const BoardCard = ({
+  hidePicture,
+  pictureUrl,
+  onVote,
+  isVoted,
+  voters,
+
+  showAuthor,
+  author
+}: BoardCardProps) => {
+  if (hidePicture) {
+    return (
+      <div className={style.containerCard}>
+        <div className={style.turnCard}>
+          <div className={style.yourTurnText}>
+            MEME
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  const cx = isVoted ? `${style.userTurnCard} ${style.selectedCard}` : style.userTurnCard
+
+  return (
+    <div className={style.containerCard} onClick={onVote}>
+      <div className={cx}>
+        <img className={style.memeImg} src={pictureUrl} />
+      </div>
+
+      {showAuthor && (
+        <>
+          <div className={style.authorName}>{author?.name}</div>
+          <div className={style.userVotedPicsContainer}>
+            {voters?.map((voter) =>
+              <div className={style.userVotedPic} key={voter.userId}>
+                <img src={voter.avatarUrl} />
+              </div>
+            )}
+          </div>
+          <div className={style.memePoints}>MP: {voters?.length}</div>
+        </>
+      )}
+    </div>
+  )
+}
+
+interface BoardProps {
+  state: 'chooseCards' | 'voteCards' | 'voteResults'
+  players: Player[]
+  settings: LobbySettings
+
+  joke: string
+  boardCards: Card[]
+  voteCard: (cardId: number) => void
+  votedCard?: Card
+
+  cards: Pick<Card, 'pictureUrl' | 'cardId'>[]
+  selectCard: (cardId: number) => void
+  selectedCard?: Pick<Card, 'pictureUrl' | 'cardId'>
+}
+
+export const Board = ({
+  state,
+  players,
+  settings,
+
+  joke,
+  boardCards,
+  voteCard,
+  votedCard,
+
+  cards,
+  selectCard,
+  selectedCard
+}: BoardProps) => {
+  const [timeLeft, setTimeLeft] = useState<number>(-1)
+
+  useEffect(() => {
+    if (state === 'chooseCards') {
+      setTimeLeft(settings.chooseCardDuration)
+    } else if (state === 'voteCards') {
+      setTimeLeft(settings.voteDuration)
+    } else if (state === 'voteResults') {
+      setTimeLeft(5)
+    }
+
+    const timer = setInterval(() => {
+      setTimeLeft((left) => left - 1)
+    }, 1000)
+
+    return () => {
+      setTimeLeft((left) => left - 1)
+      clearInterval(timer)
+    }
+  }, [state])
+
+  const selectHandler = (cardid: number) => {
+    if (state !== 'chooseCards') return
+    selectCard(cardid)
+  }
+
+  const voteHandler = (cardId: number) => {
+    if (state !== 'voteCards') return
+    voteCard(cardId)
+  }
+
+  const renderTimer = () => {
+    if (timeLeft < 0) return
+
+    const timerName = state === 'chooseCards'
+      ? 'Выбор карт'
+      : state === 'voteCards'
+        ? 'Голосование'
+        : 'Итоги'
+
+    return (
+      <div className={style.timeStep}>
+        <div>{timerName}</div>
+        <div>{timeLeft} сек</div>
+      </div>
+    )
+  }
+
   return (
     <div className={style.container}>
       <div className={style.columnUser}>
@@ -21,58 +171,43 @@ export const Board = () => {
         </div>
 
         <div className={style.containerForUserContainer}>
-          <PlayerItem
-            name='Текст длинный'
-            avatarUrl='https://media.discordapp.net/attachments/524230252084592641/1103753051417890958/image.png'
-            userId='test123'
-            memePoints={4}
-          />
-          <PlayerItem
-            name='Текст длинный2'
-            avatarUrl='https://media.discordapp.net/attachments/524230252084592641/1103753051417890958/image.png'
-            userId='test1234'
-            memePoints={2}
-          />
+          {players.map((player) => <PlayerItem key={player.userId} {...player} />)}
         </div>
       </div>
 
       <div className={style.column}>
         <div className={style.conteinerDiscription}>
-          На экране появляется шутка. После чего каждый игрок выбирает мем-картинку из своей колоды. Затем среди всех участников проводится голосование за самый смешной мем, который лучше всего подходит к ситуации.
-          Каждый голос равен одному мем-поинту
+          {joke}
         </div>
 
         <div className={style.containerForHorizontal}>
-          <div className={style.containerCard}>
-            <div className={style.turnCard}>
-              <div className={style.yourTurnText}>
-                your turn
-              </div>
-            </div>
-            <div className={style.userCardName}>EvT</div>
-          </div>
-          <div className={style.containerCard}>
-            <div className={style.userTurnCard}><img className={style.memeImg} src="https://media.discordapp.net/attachments/524230252084592641/1103753051417890958/image.png" alt="" /></div>
-            <div className={style.userCardName}>EvT</div>
-          </div>
+          {boardCards.map((card) =>
+            <BoardCard
+              key={card.userId}
+              pictureUrl={card.pictureUrl}
+              hidePicture={state === 'chooseCards' && card.cardId !== selectedCard?.cardId}
+              onVote={() => voteHandler(card.cardId)}
+              showAuthor={state === 'voteResults'}
+              author={players.find((player) => player.userId === card.userId)}
+              isVoted={card.cardId === votedCard?.cardId}
+              voters={card.voters.map((voter) => players.find((p) => p.userId === voter)!)}
+            />
+          )}
         </div>
 
         <div className={style.containerForHorizontal}>
           <div className={style.myCardContainer}>
-            <div className={style.myCard}><img className={style.memeImg} src="https://media.discordapp.net/attachments/524230252084592641/1103753051417890958/image.png" alt="" /></div>
-            <div className={style.myCard}><img className={style.memeImg} src="https://media.discordapp.net/attachments/524230252084592641/1103753051417890958/image.png" alt="" /></div>
-            <div className={style.myCard}><img className={style.memeImg} src="https://media.discordapp.net/attachments/524230252084592641/1103753051417890958/image.png" alt="" /></div>
-            <div className={style.myCard}><img className={style.memeImg} src="https://media.discordapp.net/attachments/524230252084592641/1103753051417890958/image.png" alt="" /></div>
-            <div className={style.myCard}><img className={style.memeImg} src="https://media.discordapp.net/attachments/524230252084592641/1103753051417890958/image.png" alt="" /></div>
-            <div className={style.myCard}><img className={style.memeImg} src="https://media.discordapp.net/attachments/524230252084592641/1103753051417890958/image.png" alt="" /></div>
+            {cards.map((card) =>
+              <UserCard
+                key={card.cardId}
+                pictureUrl={card.pictureUrl}
+                isSelected={card.cardId === selectedCard?.cardId}
+                onSelect={() => selectHandler(card.cardId)}
+              />
+            )}
           </div>
 
-          <div className={style.timeStep}>
-            <img className={style.stepImg} src="https://media.discordapp.net/attachments/524230252084592641/1103753051417890958/image.png" alt="" />
-            <div>ХОД</div>
-            <div>EvT</div>
-            <div>60сек</div>
-          </div>
+          {renderTimer()}
         </div>
       </div>
     </div>
