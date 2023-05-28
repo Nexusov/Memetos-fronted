@@ -111,11 +111,14 @@ export const Home = () => {
   })
 
   if (isLoading || user === null) {
-    return <Loader />
+    return <Loader type='fullscreen'/>
   }
 
   const createLobbyHandler = async () => {
-    isAnonymous && setName(formik.values.nicknameInput)
+    if (isAnonymous) {
+      setName(formik.values.nicknameInput)
+    }
+
     const lobbyInfo = await createLobby(user.userId).unwrap()
       .catch(() => null)
 
