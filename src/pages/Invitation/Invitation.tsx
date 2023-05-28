@@ -15,6 +15,7 @@ import { skipToken } from '@reduxjs/toolkit/query/react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useUser } from '../../hooks/useUser'
 import { useGetLobbyInfoQuery } from '../../services/gameApi'
+import toast from 'react-hot-toast'
 
 // TODO: make a separate general file for random avatars and nicks
 const avatars: string[] = [
@@ -114,10 +115,11 @@ export const Invitation = () => {
   }
 
   if (userLoading || lobbyLoading) {
-    return <Loader />
+    return <Loader type='fullscreen' />
   }
 
   if (isError || !lobbyInfo) {
+    toast.error('Error!', { duration: 1500 })
     return <Navigate to='/invite' />
   }
 
@@ -169,8 +171,21 @@ export const Invitation = () => {
     )
   }
 
+  // TODO: check alert are working
   const enterLobby = () => {
-    isAnonymous && setName(formik.values.nicknameInput)
+    if (isAnonymous) {
+      setName(formik.values.nicknameInput)
+    }
+    if (!lobbyInfo) {
+      toast.error('Lobby not found!', { duration: 1500 })
+      return
+    }
+
+    if (lobbyInfo.players === lobbyInfo.maxPlayers) {
+      toast.error('Lobby is full!', { duration: 1500 })
+      return
+    }
+
     navigate('/game', {
       state: code
     })
