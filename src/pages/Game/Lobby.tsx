@@ -12,6 +12,7 @@ import { LobbySettings, Player } from '../../services/game'
 import { SettingsPopup } from './SettingsPopup'
 import { ProfilePopup } from './ProfilePopup'
 import { Loader } from '../../components/Loader/Loader'
+import { useNavigate } from 'react-router'
 
 interface UserProps extends User {
   isOwner?: boolean
@@ -56,11 +57,12 @@ const UserItem = ({ name, avatarUrl, userId, isOwner, isKickable, onKick, openPo
 }
 
 const GameDescription = () => {
+  const navigate = useNavigate()
   return (
     <>
       <div>
-        <div className={style.title}>Memetos</div>
-        <div className={style.podTitle}>ПОСОБИЕ ДЛЯ маршака</div>
+        <div className={style.title} onClick={() => navigate('/')} data-memetos-logo>Memetos</div>
+        <div className={style.podTitle}>ПОСОБИЕ КАК ИГРАТЬ</div>
       </div>
       <div className={style.containerImgAndDiscriptionRulesGameMemetos}>
         <img className={style.aboutImg} src="https://cdn.discordapp.com/attachments/1102533895708225636/1109611347580289144/GameRulesPEPE.webp" alt="" />
@@ -190,6 +192,10 @@ export const Lobby = ({
           </div>
 
           <div className={style.containerForSettingsContainer}>
+            <LobbySetting
+              name='Количество раундов'
+              value={settings.roundsCount}
+            />
             <LobbySetting
               name='Карт в колоде'
               value={settings.cardsCount}

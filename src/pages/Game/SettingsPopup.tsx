@@ -20,6 +20,10 @@ export const SettingsPopup = ({ togglePopup, settings }: SettingsPopupProps) => 
 
         <div className={style.settingsContainer}>
           <LobbySetting
+            name='Количество раундов'
+            value={settings.roundsCount}
+          />
+          <LobbySetting
             name='Карт в колоде'
             value={settings.cardsCount}
           />
