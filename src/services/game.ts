@@ -16,6 +16,7 @@ export interface Card {
 
 export interface LobbySettings {
   maximumUsers: number;
+  roundsCount: number;
   cardsCount: number;
   voteDuration: number;
   chooseCardDuration: number;
@@ -58,6 +59,13 @@ interface VoteResults {
   cards: Pick<Card, 'cardId' | 'voters'>[]
 }
 
+export interface BestMeme {
+  joke: string
+  pictureUrl: string
+  votes: number
+  author: Player
+}
+
 export type ServerEvents =
   WebsocketMessage<'lobby_info', { settings: LobbySettings, players: Player[], ownerId: string }> |
 
@@ -66,6 +74,7 @@ export type ServerEvents =
 
   WebsocketMessage<'start_game'> |
   WebsocketMessage<'end_game', Required<Pick<Player, 'userId' | 'memePoints'>>[]> |
+  WebsocketMessage<'best_meme', BestMeme> |
 
   WebsocketMessage<'start_round', { joke: string }> |
   WebsocketMessage<'cards_update', Pick<Card, 'userId' | 'cardId' | 'pictureUrl'>[]> |
@@ -87,6 +96,7 @@ const initialState: GameState = {
 
   settings: {
     maximumUsers: 7,
+    roundsCount: 3,
     cardsCount: 5,
     voteDuration: 30,
     chooseCardDuration: 60,

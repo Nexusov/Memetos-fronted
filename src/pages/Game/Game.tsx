@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 
 import type { AppDispatch, RootState } from '../../redux/store'
-import { Card, ClientEvents, ServerEvents, gameActions } from '../../services/game'
+import { BestMeme, Card, ClientEvents, ServerEvents, gameActions } from '../../services/game'
 import { useUser } from '../../hooks/useUser'
 import toast from 'react-hot-toast'
 
@@ -13,6 +13,8 @@ import { Loader } from '../../components/Loader/Loader'
 
 import { Lobby } from './Lobby'
 import { Board } from './Board'
+import { createPortal } from 'react-dom'
+import { CountDown } from './CountDown'
 import { Finish } from './Finish'
 
 const transform = <T, >(data: string) => {
@@ -28,6 +30,7 @@ export const Game = () => {
   const [userCards, setUserCards] = useState<Pick<Card, 'cardId' | 'pictureUrl'>[]>([])
   const [selectedCard, setSelectedCard] = useState<Pick<Card, 'cardId' | 'pictureUrl'>>()
   const [votedCard, setVotedCard] = useState<Card>()
+  const [bestMeme, setBestMeme] = useState<BestMeme>()
 
   const [loading, setLoading] = useState(true)
   const { user, isLoading: isLoadingUser } = useUser()
@@ -100,6 +103,10 @@ export const Game = () => {
             dispatch(gameActions.endGame(serverEvent.data!))
             break
           }
+          case 'best_meme': {
+            setBestMeme(serverEvent.data!)
+            break
+          }
           case 'cards_update': {
             dispatch(gameActions.cardsUpdate(serverEvent.data!))
             break
@@ -144,7 +151,7 @@ export const Game = () => {
   }, [isLoadingUser])
 
   if (loading) {
-    return <Loader type='fullscreen'/>
+    return <Loader type='fullscreen' />
   }
 
   const sendEvent = (event: ClientEvents) => {
@@ -198,26 +205,39 @@ export const Game = () => {
     case 'idle':
     case 'starting': {
       return (
-        <Lobby
-          players={players}
-          ownerId={ownerId}
-          isOwner={isOwner}
-          settings={settings}
-          invite={inviteCode}
+        <>
+          {gameStatus === 'starting' && createPortal(
+            <CountDown />,
+            document.body
+          )}
 
-          onStart={() => sendEvent({ type: 'start' })}
-          onKick={(userId) => sendEvent({
-            type: 'kick',
-            data: {
-              userId
-            }
-          })}
-        />
+          <Lobby
+            players={players}
+            ownerId={ownerId}
+            isOwner={isOwner}
+            settings={settings}
+            invite={inviteCode}
+
+            onStart={() => sendEvent({ type: 'start' })}
+            onKick={(userId) => sendEvent({
+              type: 'kick',
+              data: {
+                userId
+              }
+            })}
+          />
+        </>
       )
     }
 
     case 'end': {
-      return <Finish players={players} settings={settings}/>
+      return (
+        <Finish
+          players={players}
+          settings={settings}
+          bestMeme={bestMeme}
+        />
+      )
     }
 
     default: {

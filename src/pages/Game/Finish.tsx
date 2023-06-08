@@ -1,5 +1,5 @@
 import style from './Finish.module.scss'
-import { LobbySettings, Player } from '../../services/game'
+import { BestMeme, LobbySettings, Player } from '../../services/game'
 
 import { useNavigate } from 'react-router'
 
@@ -19,13 +19,33 @@ import { ReactComponent as BronzeMedal } from '../../assets/bronze-medal.svg'
     УВАГА! МОЖЕТ БЫТЬ НЕСКОЛЬКО ИГРОКОВ НА ОДНО МЕСТО!!!
 */
 
-const PlayerItem = ({ avatarUrl, name, memePoints }: Player) => {
+interface PlayerItemProps extends Player {
+  place?: number
+}
+
+const PlayerItem = ({ avatarUrl, name, memePoints, place }: PlayerItemProps) => {
+  const PlaceBadge = () => {
+    switch (place) {
+      case 1: {
+        return <div className={style.icon}><Trophy /></div>
+      }
+      case 2: {
+        return <div className={style.icon}><BlueMedal /></div>
+      }
+      case 3: {
+        return <div className={style.icon}><BronzeMedal /></div>
+      }
+    }
+
+    return null
+  }
+
   return (
     <div className={style.userContainer}>
       <img className={style.userAvatar} src={avatarUrl} alt="" />
-      <div className={style.icon}><Trophy /></div>
+      <PlaceBadge />
       <div className={style.userName}>{name}</div>
-      <div className={style.containerPoints}>{memePoints} mp</div>
+      {memePoints !== undefined && <div className={style.containerPoints}>{memePoints} mp</div>}
     </div>
   )
 }
@@ -33,13 +53,21 @@ const PlayerItem = ({ avatarUrl, name, memePoints }: Player) => {
 interface FinishProps {
   players: Player[]
   settings: LobbySettings
+  bestMeme?: BestMeme
 }
 
 export const Finish = ({
   players,
-  settings
+  settings,
+  bestMeme
 }: FinishProps) => {
   const navigate = useNavigate()
+  const [one, two, three] = new Set(players.map(({ memePoints }) => memePoints!).sort((a, b) => b - a))
+
+  const firstPlace = players.filter((p) => p.memePoints === one)
+  const secondPlace = players.filter((p) => p.memePoints === two)
+  const thirdPlace = players.filter((p) => p.memePoints === three)
+  const otherPlayers = players.filter((p) => p.memePoints && p.memePoints < three)
 
   return (
     <div className={style.container}>
@@ -50,7 +78,10 @@ export const Finish = ({
         </div>
 
         <div className={style.userListContainer}>
-          {players.map((player) => <PlayerItem key={player.userId} {...player} />)}
+          {firstPlace.map((player) => <PlayerItem key={player.userId} {...player} place={1} />)}
+          {secondPlace.map((player) => <PlayerItem key={player.userId} {...player} place={2} />)}
+          {thirdPlace.map((player) => <PlayerItem key={player.userId} {...player} place={3} />)}
+          {otherPlayers.map((player) => <PlayerItem key={player.userId} {...player} />)}
         </div>
 
         <div className={style.buttonContainer}>
@@ -59,26 +90,27 @@ export const Finish = ({
         </div>
       </div>
 
-      <div className={style.column}>
-        <div className={style.finalPageTitle}>
-          ЛУЧШАЯ МЕМ КАРТА
-        </div>
-        <div className={style.bestCardAuthor}>
-          {players.map((player) => <PlayerItem key={player.userId} {...player} />)}
-        </div>
-        <div className={style.joke}>
-          Когда пришел на пару ну вы поняли и вообще маршак шашлык такой сочный вкусный шашлык что просто жесть а еще он дурак очень гулпый и не умеет играть в рассвет
-        </div>
-        <div className={style.containerCard}>
-          <div className={style.bestCard}>
-            {/* <img className={style.memeImg} src={pictureUrl} /> */}
-            <img className={style.memeImg} src={'https://media.discordapp.net/attachments/704624285821435925/1110660123803779184/Screenshot_20210412-140741_Plants_vs_Zombies_FREE.png'} />
+      {bestMeme && (
+        <div className={style.column}>
+          <div className={style.finalPageTitle}>
+            ЛУЧШАЯ МЕМ КАРТА
+          </div>
+          <div className={style.bestCardAuthor}>
+            <PlayerItem {...bestMeme.author} />
+          </div>
+          <div className={style.joke}>
+            {bestMeme.joke}
+          </div>
+          <div className={style.containerCard}>
+            <div className={style.bestCard}>
+              <img className={style.memeImg} src={bestMeme.pictureUrl} />
+            </div>
+          </div>
+          <div className={style.bottomFinishTitle}>
+            ОНА ПОНРАВИЛАСЬ {bestMeme.votes} УЧАСТНИКАМ
           </div>
         </div>
-        <div className={style.bottomFinishTitle}>
-          ОНА ПОНРАВИЛАСЬ 6 УЧАСТНИКАМ
-        </div>
-      </div>
+      )}
     </div>
   )
 }
