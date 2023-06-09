@@ -51,7 +51,9 @@ export const Game = () => {
 
   useEffect(() => {
     if (isLoadingUser) return
-    socket.current = new WebSocket('ws://localhost:3000/api/game/game')
+    const protocol = window.location.protocol.endsWith('s:') ? 'wss://' : 'ws://'
+    const url = new URL('/api/game/game', `${protocol}${window.location.host}`)
+    socket.current = new WebSocket(url)
 
     socket.current.addEventListener('open', () => {
       if (!socket.current) return

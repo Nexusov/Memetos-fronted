@@ -4,7 +4,7 @@ import type { Player } from './game'
 export const gameApi = createApi({
   reducerPath: 'gameApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3000/api/game'
+    baseUrl: '/api/game'
   }),
 
   endpoints: (builder) => ({

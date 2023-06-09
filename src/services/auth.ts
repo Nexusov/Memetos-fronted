@@ -37,7 +37,7 @@ const generateUserId = (length = 9): string => {
 export const getDiscordToken = createAsyncThunk<DiscordToken, string>(
   'auth/getDiscordToken',
   async (code, { rejectWithValue }) => {
-    const response = await fetch('http://localhost:3000/api/auth/discord', {
+    const response = await fetch('/api/auth/discord', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ code })

@@ -5,8 +5,15 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { getDiscordToken } from '../../services/auth'
 import { AppDispatch, RootState } from '../../redux/store'
 
-const authLink = 'https://discord.com/oauth2/authorize?client_id=1094675492981981214&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fauth%2Fdiscord&response_type=code&scope=identify%20email'
+// const authLink = 'https://discord.com/oauth2/authorize?client_id=1094675492981981214&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fauth%2Fdiscord&response_type=code&scope=identify%20email'
 
+const authUrlBuilder = new URL('https://discord.com/oauth2/authorize')
+authUrlBuilder.searchParams.set('client_id', '1094675492981981214')
+authUrlBuilder.searchParams.set('redirect_uri', new URL('/auth/discord', window.location.origin).toString())
+authUrlBuilder.searchParams.set('response_type', 'code')
+authUrlBuilder.searchParams.set('scope', 'identify email')
+
+const authLink = authUrlBuilder.toString()
 export const DiscordAuth = () => {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
