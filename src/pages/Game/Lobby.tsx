@@ -62,7 +62,7 @@ const GameDescription = () => {
     <>
       <div>
         <div className={style.title} onClick={() => navigate('/')} data-memetos-logo>Memetos</div>
-        <div className={style.podTitle}>ПОСОБИЕ КАК ИГРАТЬ</div>
+        <div className={style.podTitle}>ПОСОБИЕ ДЛЯ маршака</div>
       </div>
       <div className={style.containerImgAndDiscriptionRulesGameMemetos}>
         <img className={style.aboutImg} src="https://cdn.discordapp.com/attachments/1102533895708225636/1109611347580289144/GameRulesPEPE.webp" alt="" />
