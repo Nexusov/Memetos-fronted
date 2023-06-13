@@ -13,21 +13,24 @@ const PlayerItem = ({ avatarUrl, name, memePoints }: Player) => {
 }
 
 interface UserCardProps extends Pick<Card, 'pictureUrl'> {
+  disabled: boolean
   isSelected?: boolean
   onSelect: () => void
 }
 
-const UserCard = ({ pictureUrl, onSelect, isSelected }: UserCardProps) => {
+const UserCard = ({ pictureUrl, onSelect, isSelected, disabled }: UserCardProps) => {
   const cx = isSelected ? `${style.myCard} ${style.selectedCard}` : style.myCard
+  const cx2 = disabled ? `${cx} ${style.disabled}` : cx
 
   return (
-    <div className={cx} onClick={onSelect}>
+    <div className={cx2} onClick={onSelect}>
       <img className={style.memeImg} src={pictureUrl} />
     </div>
   )
 }
 
 interface BoardCardProps extends Pick<Card, 'pictureUrl'> {
+  disabled: boolean
   hidePicture?: boolean
 
   showAuthor?: boolean
@@ -39,6 +42,7 @@ interface BoardCardProps extends Pick<Card, 'pictureUrl'> {
 }
 
 const BoardCard = ({
+  disabled,
   hidePicture,
   pictureUrl,
   onVote,
@@ -61,10 +65,11 @@ const BoardCard = ({
   }
 
   const cx = isVoted ? `${style.userTurnCard} ${style.selectedCard}` : style.userTurnCard
+  const cx2 = disabled ? `${cx} ${style.disabled}` : cx
 
   return (
     <div className={style.containerCard} onClick={onVote}>
-      <div className={cx}>
+      <div className={cx2}>
         <img className={style.memeImg} src={pictureUrl} />
       </div>
 
@@ -142,6 +147,7 @@ export const Board = ({
 
   const voteHandler = (cardId: number) => {
     if (state !== 'voteCards') return
+    if (cardId === selectedCard?.cardId) return
     voteCard(cardId)
   }
 
@@ -183,6 +189,7 @@ export const Board = ({
         <div className={style.containerForHorizontal}>
           {boardCards.map((card) =>
             <BoardCard
+              disabled={state !== 'chooseCards' && card.cardId === selectedCard?.cardId}
               key={card.userId}
               pictureUrl={card.pictureUrl}
               hidePicture={state === 'chooseCards' && card.cardId !== selectedCard?.cardId}
@@ -199,6 +206,7 @@ export const Board = ({
           <div className={style.myCardContainer}>
             {cards.map((card) =>
               <UserCard
+                disabled={state !== 'chooseCards'}
                 key={card.cardId}
                 pictureUrl={card.pictureUrl}
                 isSelected={card.cardId === selectedCard?.cardId}

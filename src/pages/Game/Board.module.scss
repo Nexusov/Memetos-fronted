@@ -295,3 +295,8 @@
     line-height: 24px;
     color: #F4E134;
 }
+
+.disabled {
+    opacity: 0.5;
+    filter: grayscale(0.5); 
+}
