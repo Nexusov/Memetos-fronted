@@ -32,7 +32,7 @@ export const discordApi = createApi({
 
         return {
           userId: discordUser.id,
-          name: discordUser.username,
+          name: (discordUser as {global_name?: string}).global_name ?? discordUser.username,
           avatarUrl
         }
       }
