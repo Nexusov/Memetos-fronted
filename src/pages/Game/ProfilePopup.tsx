@@ -31,7 +31,7 @@ export const ProfilePopup = ({ toggleProfilePopup, user }: ProfilePopupProps) =>
               <div className={style.line}></div>
               <div className={style.statsText}>
                 <div className={style.topTitle}>TOP 1</div>
-                <div className={style.topCount}>0</div>
+                <div className={style.topCount}>3</div>
               </div>
             </div>
 
@@ -39,7 +39,7 @@ export const ProfilePopup = ({ toggleProfilePopup, user }: ProfilePopupProps) =>
               <div className={style.line}></div>
               <div className={style.statsText}>
                 <div className={style.topTitle}>TOP 2</div>
-                <div className={style.topCount}>0</div>
+                <div className={style.topCount}>5</div>
               </div>
             </div>
 
@@ -55,7 +55,7 @@ export const ProfilePopup = ({ toggleProfilePopup, user }: ProfilePopupProps) =>
               <div className={style.line}></div>
               <div className={style.statsText}>
                 <div className={style.topTitle}>TOTAL</div>
-                <div className={style.topCount}>3489</div>
+                <div className={style.topCount}>21</div>
               </div>
             </div>
           </div>

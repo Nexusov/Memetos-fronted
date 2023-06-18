@@ -4,6 +4,8 @@
   transition-property: background, color, box-shadow, outline, border, transform, font-size;
   transition-duration: .3s;
   transition-timing-function: ease;
+  /* box-sizing: border-box; */
+  font-smooth: never;
 }
 
 div, span, img {

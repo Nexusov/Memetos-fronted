@@ -25,4 +25,12 @@
     border: 2px solid #FFFFFF;
     box-shadow: 4px 4px 0px #C699D7;
   }
+
+  @media screen and (max-width: 800px) {
+    font-size: 15px;
+  }
+
+  @media screen and (max-width: 350px) {
+    padding: 10px 15px;
+  }
 }

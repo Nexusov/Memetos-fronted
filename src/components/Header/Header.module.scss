@@ -3,6 +3,11 @@
   justify-content: center;
   align-items: center;
   position: relative;
+
+  @media screen and (max-width: 500px) {
+    flex-direction: row;
+    justify-content: initial;
+  }
 }
 
 .title {
@@ -11,6 +16,14 @@
   font-size: 48px;
   line-height: 57px;
   text-transform: uppercase;
+
+  @media screen and (max-width: 390px) {
+    font-size: 40px;
+  }
+
+  @media screen and (max-width: 350px) {
+    font-size: 35px;
+  }
 }
 
 .language {

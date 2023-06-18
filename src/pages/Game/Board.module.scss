@@ -3,6 +3,10 @@
     justify-content: space-between;
     height: 100%;
     gap: 22px;
+
+    @media screen and (max-width: 800px) {
+        flex-direction: column;
+    }
 }
 
 .column {
@@ -17,12 +21,16 @@
 
 .conteinerDiscription {
     font-weight: 700;
-    font-size: 18px;
-    line-height: 26px;
+    font-size: 24px;
+    line-height: 30px;
     text-align: center;
     white-space: pre-line;
-
     color: #E7A3FF;
+
+    @media screen and (max-width: 500px) {
+        font-size: 20px;
+        line-height: 25px;
+    }
 }
 
 .columnUser {
@@ -32,6 +40,10 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
+
+    @media screen and (max-width: 800px) {
+        height: auto;
+    }
 }
 
 .title {
@@ -56,6 +68,15 @@
     align-items: flex-start;
     gap: 20px;
     width: 100%;
+
+    @media screen and (max-width: 800px) {
+        flex-direction: row;
+        /* justify-content: space-between; */
+        align-items: flex-start;
+        padding: 0px;
+        gap: 14px;
+        isolation: isolate;
+    }
 }
 
 .userContainer {
@@ -70,6 +91,15 @@
     box-shadow: 4px 4px 0px #693D79;
     outline: 2px solid #E7A3FF;
     border-radius: 45px 14px 14px 45px;
+
+    @media screen and (max-width: 800px) {
+        outline: none;
+        border-radius: none;
+        box-shadow: none;
+        background: none;
+        width: auto;
+        padding-right: 0px;
+    }
 }
 
 .userAvatar {
@@ -138,6 +168,14 @@
     justify-content: center;
 }
 
+.boardCards {
+    @media screen and (max-width: 800px) {
+        width: -webkit-fill-available;
+        height: -webkit-fill-available;
+        overflow-x: auto;
+    }
+}
+
 .myCardContainer {
     display: flex;
     gap: 10px;
@@ -152,6 +190,11 @@
 
     outline: 3px solid #E7A3FF;
     border-radius: 14px;
+
+    @media screen and (max-width: 800px) {
+        width: 80px;
+        height: 120px;
+    }
 }
 
 .myCardContainer:hover {
@@ -195,6 +238,11 @@
     text-shadow: 0px 4px 0px rgba(0, 0, 0, 0.25);
 
     animation: transform-animation 0.3s ease-in-out forwards;
+    
+    @media screen and (max-width: 800px) {
+        width: 120px;
+        height: 180px;
+    }
 }
 
 .userTurnCard {
@@ -223,6 +271,11 @@
     text-shadow: 0px 4px 0px rgba(0, 0, 0, 0.25);
 
     animation: transform-animation 0.3s ease-in-out forwards;
+    
+    @media screen and (max-width: 800px) {
+        width: 120px;
+        height: 180px;
+    }
 }
 
 .selectedCard {
@@ -274,6 +327,29 @@
     color: #FFFFFF;
     text-shadow: 0px 2px 0px #9731BC;
     background: linear-gradient(0deg, rgba(63, 38, 89, 0.82), rgba(63, 38, 89, 0.82)), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+    
+    @media screen and (max-width: 800px) {
+        display: none;
+    }
+}
+
+.mobileTimeStep {
+    display: none;
+    position: absolute;
+    top: 75%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: #FFFFFF;
+
+    @media screen and (max-width: 800px) {
+        display: flex;
+    }
 }
 
 .stepImg {
@@ -299,4 +375,24 @@
 .disabled {
     opacity: 0.5;
     filter: grayscale(0.5); 
+    cursor: not-allowed;
+}
+
+.swiperSlider {
+    display: none;
+    @media screen and (max-width: 800px) {
+        display: flex;
+    }
+}
+
+div[data-mobile] {
+    @media screen and (max-width: 500px) {
+        display: none;
+    }
+}
+
+div[data-mobile-swiper] {
+    @media screen and (max-width: 800px) {
+        display: none;
+    }
 }

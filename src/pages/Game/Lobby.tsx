@@ -154,7 +154,7 @@ export const Lobby = ({
         createPortal(<ProfilePopup toggleProfilePopup={() => toggleProfilePopup()} user={userForProfilePopup} />, document.body)
       )}
       <div className={style.container}>
-        <div className={style.column}>
+        <div className={style.column} data-mobile>
           <GameDescription />
         </div>
 
@@ -184,14 +184,14 @@ export const Lobby = ({
         </div>
 
         <div className={style.column}>
-          <div>
+          <div data-mobile>
             <div>
               <div className={style.title}>Settings</div>
             </div>
             <div className={style.podTitle} onMouseDown={copyInvite}>Code: <span className={style.gameCode}>{invite}</span></div>
           </div>
 
-          <div className={style.containerForSettingsContainer}>
+          <div className={style.containerForSettingsContainer} data-mobile>
             <LobbySetting
               name='Количество раундов'
               value={settings.roundsCount}

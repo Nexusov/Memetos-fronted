@@ -44,7 +44,7 @@ const PlayerItem = ({ avatarUrl, name, memePoints, place }: PlayerItemProps) => 
     <div className={style.userContainer}>
       <img className={style.userAvatar} src={avatarUrl} alt="" />
       <PlaceBadge />
-      <div className={style.userName}>{name}</div>
+      <div className={style.userName} data-mobile>{name}</div>
       {memePoints !== undefined && <div className={style.containerPoints}>{memePoints} mp</div>}
     </div>
   )
@@ -84,7 +84,7 @@ export const Finish = ({
           {otherPlayers.map((player) => <PlayerItem key={player.userId} {...player} />)}
         </div>
 
-        <div className={style.buttonContainer}>
+        <div className={style.buttonContainer} data-mobileOff>
           {/* TODO: make navigation to the Lobby, not at Home */}
           <button className={style.button} onClick={() => navigate('/')}>ВЕРНУТЬСЯ В ЛОББИ</button>
         </div>
@@ -108,6 +108,10 @@ export const Finish = ({
           </div>
           <div className={style.bottomFinishTitle}>
             ОНА ПОНРАВИЛАСЬ {bestMeme.votes} УЧАСТНИКАМ
+          </div>
+          <div className={style.buttonContainer} data-mobileOn>
+            {/* TODO: make navigation to the Lobby, not at Home */}
+            <button className={style.button} onClick={() => navigate('/')}>ВЕРНУТЬСЯ В ЛОББИ</button>
           </div>
         </div>
       )}

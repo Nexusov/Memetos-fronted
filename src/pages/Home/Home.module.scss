@@ -75,10 +75,18 @@ $error-color: #ff2c56;
   border-radius: 7px;
   outline: none;
 
+  @media screen and (max-width: 350px) {
+    padding: 10px 10px;
+  }
+
   &::placeholder {
     color: #b62d48;
     font-size: 15px;
     font-weight: 600;
+
+    @media screen and (max-width: 350px) {
+      font-size: 14px;
+    }
   }
 
   &:focus {
@@ -86,6 +94,10 @@ $error-color: #ff2c56;
     color: #fff;
     border: 2px solid #fff;
     padding: 10px 30px;
+  }
+
+  @media screen and (max-width: 800px) {
+    box-sizing: border-box;
   }
 }
 
@@ -99,7 +111,7 @@ $error-color: #ff2c56;
 
 .profileContainer {
   padding: 0 0;
-
+  overflow: hidden;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -111,16 +123,40 @@ $error-color: #ff2c56;
 
   background: rgba(0, 0, 0, 0.2);
   border-radius: 20px;
+
+  @media screen and (max-width: 800px) {
+    width: -webkit-fill-available;
+    gap: 30px;
+    justify-content: flex-start;
+  }
+
+  @media screen and (max-width: 800px) and (min-width: 500px) {
+    width: 400px;
+    padding: 5px 10px;
+  }
+
+  @media screen and (max-width: 500px) {
+    padding: 5px 10px;
+  }
+
+  @media screen and (max-width: 350px) {
+    padding: 0px 10px;
+  }
 }
 
 .textContainer {
-  width: 362px;
+  /* max-width: 362px; */
+  min-width: 360px;
   height: 56px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 0px;
   gap: 5px;
+
+  @media screen and (max-width: 800px) {
+    min-width: initial;
+  }
 }
 
 .pepe {
@@ -129,6 +165,13 @@ $error-color: #ff2c56;
   margin-left: 5px;
   background-image: url("https://cdn.discordapp.com/attachments/561591566045544449/1103745915283574815/removal.ai_tmp-644af2d1406a5.png");
   border-radius: 4px;
+
+  @media screen and (max-width: 350px) {
+    width: 18px;
+    height: 19px;
+    margin-left: 3px;
+    border-radius: none;
+  }
 }
 
 .nickname {
@@ -148,6 +191,11 @@ $error-color: #ff2c56;
   align-items: center;
   text-transform: uppercase;
   color: #FFFFFF;
+
+  @media screen and (max-width: 350px) {
+    font-size: 12px;
+    white-space: pre;
+  }
 }
 
 .containerForHomePageValidationErrorIspiredByEVT {

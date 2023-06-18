@@ -1,9 +1,13 @@
 .container {
-  position: absolute;
+/*   position: absolute;
   right: 0;
   left: 0;
   top: 0;
-  bottom: 0;
+  bottom: 0; */
+
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
 
   padding: 22px;
 
@@ -12,6 +16,10 @@
     linear-gradient(77.81deg, rgba(141, 34, 118, 0.8) 0%, rgba(43, 31, 121, 0.8) 100%);
   background-size: 200% 200%;
   animation: background-animation 25s linear infinite;
+  
+  @media screen and (max-width: 500px) {
+    padding: 15px;
+  }
 }
 
 @keyframes background-animation {

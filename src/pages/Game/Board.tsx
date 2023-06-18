@@ -6,8 +6,8 @@ const PlayerItem = ({ avatarUrl, name, memePoints }: Player) => {
   return (
     <div className={style.userContainer}>
       <img className={style.userAvatar} src={avatarUrl} alt="" />
-      <div className={style.userName}>{name}</div>
-      <div className={style.containerPoints}>{memePoints || 0} mp</div>
+      <div className={style.userName} data-mobile>{name}</div>
+      <div className={style.containerPoints} data-mobile>{memePoints || 0} mp</div>
     </div>
   )
 }
@@ -168,6 +168,23 @@ export const Board = ({
     )
   }
 
+  const renderMobileTimer = () => {
+    if (timeLeft < 0) return
+
+    const timerName = state === 'chooseCards'
+      ? 'Выбор карт:'
+      : state === 'voteCards'
+        ? 'Голосование:'
+        : 'Итоги:'
+
+    return (
+      <div className={style.mobileTimeStep}>
+        <div>{timerName}</div>
+        <div>{timeLeft} сек</div>
+      </div>
+    )
+  }
+
   return (
     <div className={style.container}>
       <div className={style.columnUser}>
@@ -186,7 +203,7 @@ export const Board = ({
           {joke}
         </div>
 
-        <div className={style.containerForHorizontal}>
+        <div className={`${style.containerForHorizontal} ${style.boardCards}`}>
           {boardCards.map((card) =>
             <BoardCard
               disabled={state !== 'chooseCards' && card.cardId === selectedCard?.cardId}
@@ -201,6 +218,7 @@ export const Board = ({
             />
           )}
         </div>
+        {renderMobileTimer()}
 
         <div className={style.containerForHorizontal}>
           <div className={style.myCardContainer}>

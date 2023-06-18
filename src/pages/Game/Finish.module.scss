@@ -3,6 +3,11 @@
   justify-content: space-between;
   height: 100%;
   gap: 22px;
+
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
 .column {
@@ -46,6 +51,20 @@
   align-items: flex-start;
   gap: 20px;
   width: 100%;
+
+  @media screen and (max-width: 500px) {
+    flex-direction: row;
+    gap: 13px;
+    width: initial;
+  }
+
+  @media screen and (max-width: 390px) {
+    gap: 5px;
+  }
+
+  @media screen and (max-width: 350px) {
+    gap: 2px
+  }
 }
 
 .userContainer {
@@ -59,6 +78,15 @@
   box-shadow: 4px 4px 0px #693D79;
   outline: 2px solid #E7A3FF;
   border-radius: 45px 14px 14px 45px;
+
+  @media screen and (max-width: 500px) {
+    background: none;
+    box-shadow: none;
+    outline: none;
+    flex-direction: column;
+    padding-right: 0px;
+    gap: 12px;
+  }
 }
 
 .userAvatar {
@@ -68,6 +96,18 @@
   border-radius: 38px;
   transform: scale(1.2);
   margin-right: 8px;
+
+  @media screen and (max-width: 500px) {
+    margin-right: 0px;
+    max-width: 38px;
+    max-height: 38px;
+  }
+
+  @media screen and (max-width: 350px) {
+    margin-right: 0px;
+    max-width: 35px;
+    max-height: 35px;
+  }
 }
 
 .userName {
@@ -79,6 +119,12 @@
   align-items: center;
   text-transform: uppercase;
   color: #E7A3FF;
+
+  @media screen and (max-width: 500px) {
+    width: initial;
+    word-break: break-all;
+    font-size: 14px;
+  }
 }
 
 .containerPoints {
@@ -87,6 +133,18 @@
   line-height: 19px;
   white-space: nowrap;
   color: #E7A3FF;
+
+  @media screen and (max-width: 500px) {
+    font-size: 14px;
+  }
+
+  @media screen and (max-width: 390px) {
+    font-size: 13px;
+  }
+
+  @media screen and (max-width: 350px) {
+    font-size: 11px;
+  }
 }
 
 .memeImg {
@@ -115,6 +173,11 @@
   border: 2px solid #E7A3FF;
   box-shadow: 4px 4px 0px #693D79;
   border-radius: 34px;
+
+  @media screen and (max-width: 500px) {
+    font-size: 14px;
+    padding: 10px 22px;
+  }
 
   &:hover {
     color: #FFFFFF;
@@ -147,6 +210,13 @@
   text-align: center;
   align-self: stretch;
   color: #E7A3FF;
+  /* white-space: pre; */
+
+  @media screen and (max-width: 500px) {
+    white-space: normal;
+    font-size: 18px;
+    line-height: 20px;
+  }
 }
 
 .containerCard {
@@ -165,6 +235,12 @@
   background: rgba(0, 0, 0, 0.2);
   box-shadow: 4px 4px 0px #5A3368;
   border-radius: 45px 7px 7px 45px;
+
+  @media screen and (max-width: 500px) {
+    background: none;
+    box-shadow: none;
+    outline: none;
+  }
 }
 
 .bestCard {
@@ -187,6 +263,11 @@
   color: rgba(255, 255, 255, 0.33);
   text-shadow: 0px 4px 0px rgba(0, 0, 0, 0.25);
   animation: transform-animation 0.3s ease-in-out forwards;
+  
+  @media screen and (max-width: 500px) {
+    width: 186px;
+    height: 280px;
+  }
 }
 
 .bottomFinishTitle {
@@ -197,9 +278,48 @@
   text-align: center;
   align-self: stretch;
   color: #E7A3FF;
+
+  @media screen and (max-width: 500px) {
+    font-size: 15px;
+    white-space: pre;
+  }
+
+  @media screen and (max-width: 390px) {
+    line-height: 25px;
+  }
 }
 
 .icon {
   width: 19px;
   height: 19px;
+
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
+}
+
+.bestCardAuthor > .userContainer > .userName {
+  @media screen and (max-width: 500px) {
+    display: initial;
+  }
+}
+
+div[data-mobile] {
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
+}
+
+div[data-mobileOn] {
+  display: none;
+  @media screen and (max-width: 500px) {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+div[data-mobileOff] {
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
 }
