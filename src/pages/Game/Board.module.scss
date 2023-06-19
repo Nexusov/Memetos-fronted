@@ -5,11 +5,11 @@
     gap: 22px;
 
     height: 100vh;
-max-height: calc(100vh - 44px);
+    max-height: calc(100vh - 44px);
 
-@media screen and (max-width: 500px) {
-  max-height: calc(100vh - 30px);
-}
+    @media screen and (max-width: 500px) {
+        max-height: calc(100vh - 30px);
+    }
 
     @media screen and (max-width: 800px) {
         flex-direction: column;

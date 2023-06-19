@@ -4,6 +4,12 @@
   height: 100%;
   gap: 22px;
 
+  max-height: calc(100vh - 44px);
+
+  @media screen and (max-width: 800px) {
+    max-height: initial
+  }
+
   @media screen and (max-width: 500px) {
     flex-direction: column;
     gap: 10px;
