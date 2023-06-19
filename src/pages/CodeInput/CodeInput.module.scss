@@ -31,6 +31,14 @@
    align-items: center;
    background: rgba(0, 0, 0, 0.2);
    border-radius: 20px;
+
+   @media screen and (max-width: 390px) {
+      width: 315px
+   }
+
+   @media screen and (max-width: 350px) {
+      width: 300px
+   }
 }
 
 .insideInputContainer {
@@ -41,6 +49,10 @@
    width: 346px;
    height: 73px;
    padding: 30px;
+
+   @media screen and (max-width: 390px) {
+      width: -webkit-fill-available
+   }
 }
 
 .inputName {
@@ -61,6 +73,10 @@
    outline: none;
    text-transform: uppercase;
 
+   @media screen and (max-width: 390px) {
+      width: -webkit-fill-available
+   }
+
    &:focus {
       background: rgb(228 228 228 / 16.6%);
       color: #fff;
@@ -71,6 +87,10 @@
    &::placeholder {
       font-size: 15px;
       font-weight: 600;
+
+      @media screen and (max-width: 390px) {
+         font-size: 14px;
+      }
    }
 }
 
