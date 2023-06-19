@@ -1,10 +1,15 @@
 $error-color: #ff2c56;
 
 .container {
+  height: 100vh;
+  max-height: calc(100vh - 44px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+
+  @media screen and (max-width: 500px) {
+    max-height: calc(100vh - 30px);
+  }
 }
 
 .content {
@@ -36,6 +41,10 @@ $error-color: #ff2c56;
   background: rgba(0, 0, 0, 0.2);
   border-radius: 1000px;
   justify-content: center;
+
+  @media screen and (max-width: 800px) {
+    padding: 0
+  }
 }
 
 .buttonContainer {

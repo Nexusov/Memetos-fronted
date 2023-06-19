@@ -1,8 +1,13 @@
 .container {
+    height: 100vh;
+    max-height: calc(100vh - 44px);
     display: flex;
     justify-content: space-between;
-    height: 100%;
     gap: 60px;
+
+    @media screen and (max-width: 500px) {
+        max-height: calc(100vh - 30px);
+    }
 
     @media screen and (max-width: 800px) {
         flex-direction: column;
